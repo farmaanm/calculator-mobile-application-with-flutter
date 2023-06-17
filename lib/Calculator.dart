@@ -12,7 +12,9 @@ class MyCalculatorPage extends StatefulWidget {
 }
 
 class _MyCalculatorPageState extends State<MyCalculatorPage> {
+  //String _num1 = '', _num2 = '0', _answer = '0';
   double _num1 = 0, _num2 = 0, _answer = 0;
+  String userEnteredValues = "";
   String symbol = "+";
 
   @override
@@ -22,18 +24,10 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            Text(
-              _answer.toString(),
-            ),
             TextFormField(
+              controller: TextEditingController(text: userEnteredValues),
               readOnly: true,
               decoration: InputDecoration(),
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter your name';
-                }
-                return null;
-              },
               onChanged: (value) {
                 // Handle input changes
               },
@@ -47,7 +41,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           child:
                             ElevatedButton(
                               onPressed: () {
-                                /*_answer = addFunction(_num1, _num2);*/
+                                setState(() {
+                                  userEnteredValues = '';
+                                });
                               },
                               style: ButtonStyle(
                                 shape: MaterialStateProperty.all(CircleBorder()),
@@ -122,6 +118,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           ElevatedButton(
                             onPressed: () {
                               /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '7';
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(CircleBorder()),
@@ -139,6 +138,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           ElevatedButton(
                             onPressed: () {
                               /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '8';
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(CircleBorder()),
@@ -156,6 +158,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           ElevatedButton(
                             onPressed: () {
                               /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '9';
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(CircleBorder()),
@@ -196,6 +201,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           ElevatedButton(
                             onPressed: () {
                               /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '4';
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(CircleBorder()),
@@ -213,6 +221,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           ElevatedButton(
                             onPressed: () {
                               /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '5';
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(CircleBorder()),
@@ -230,6 +241,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           ElevatedButton(
                             onPressed: () {
                               /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '6';
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(CircleBorder()),
@@ -270,6 +284,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           ElevatedButton(
                             onPressed: () {
                               /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '1';
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(CircleBorder()),
@@ -287,6 +304,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           ElevatedButton(
                             onPressed: () {
                               /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '2';
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(CircleBorder()),
@@ -304,6 +324,9 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                           ElevatedButton(
                             onPressed: () {
                               /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '3';
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all(CircleBorder()),
@@ -336,32 +359,44 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                       ]),
             ),
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child:  Row(
                 children: <Widget>[
                   Expanded(
                     flex: 2,
                     child:
-                    ElevatedButton(
-                      onPressed: () {
-                        /*_answer = addFunction(_num1, _num2);*/
-                      },
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(CircleBorder()),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(25)),
-                        backgroundColor: MaterialStateProperty.all(Colors.blue), // Button color
-                        overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-                          if (states.contains(MaterialState.pressed)) return Colors.blueGrey; // Splash color
-                        }),
-                      ),
-                      child: const Text('0', style: TextStyle(fontSize: 20),),
-                    ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              /*_answer = addFunction(_num1, _num2);*/
+                              setState(() {
+                                userEnteredValues += '0';
+                              });
+                            },
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50.0),
+                                ),),
+                              padding: MaterialStateProperty.all(const EdgeInsets.all(25)),
+                              backgroundColor: MaterialStateProperty.all(Colors.blue), // Button color
+                              overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
+                                if (states.contains(MaterialState.pressed)) return Colors.blueGrey; // Splash color
+                              }),
+                            ),
+                            child: const Text('0', style: TextStyle(fontSize: 20),),
+                          ),
+                        ),
                   ),
                   Expanded(
                     child:
                     ElevatedButton(
                       onPressed: () {
                         /*_answer = addFunction(_num1, _num2);*/
+                        setState(() {
+                          userEnteredValues += ".";
+                        });
                       },
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all(CircleBorder()),
