@@ -103,7 +103,7 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                   ),
                 ),
                 // +/-
-                Expanded(
+                /*Expanded(
                   child: ElevatedButton(
                     onPressed: () {
                       /*_answer = addFunction(_num1, _num2);*/
@@ -125,12 +125,16 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                ),
+                ),*/
                 // %
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      /*_answer = addFunction(_num1, _num2);*/
+                      setState(() {
+                        _num1 = double.parse(userEnteredValues);
+                        symbol = '%';
+                        userEnteredValues = (_num1 / 100).toString();
+                      });
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all(const CircleBorder()),
@@ -154,7 +158,6 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      /*_answer = addFunction(_num1, _num2);*/
                       setState(() {
                         _num1 = double.parse(userEnteredValues);
                         symbol = '/';
@@ -177,6 +180,32 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                       '/',
                       style: TextStyle(fontSize: 20),
                     ),
+                  ),
+                ),
+
+                // Backspace
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        if (userEnteredValues.isNotEmpty) {
+                          userEnteredValues = userEnteredValues.substring(0, userEnteredValues.length - 1);
+                        }
+                      });
+                    },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(const CircleBorder()),
+                      padding: MaterialStateProperty.all(const EdgeInsets.all(25)),
+                      backgroundColor: MaterialStateProperty.all(
+                          Colors.blue), // Button color
+                      overlayColor:
+                      MaterialStateProperty.resolveWith<Color?>((states) {
+                        if (states.contains(MaterialState.pressed)) {
+                          return Colors.blueGrey; // Splash color
+                        }
+                      }),
+                    ),
+                    child: const Icon(Icons.backspace),
                   ),
                 ),
               ]),
@@ -590,18 +619,26 @@ class _MyCalculatorPageState extends State<MyCalculatorPage> {
                       setState(() {
                         _num2 = double.parse(userEnteredValues);
                         if (symbol == '+') {
-                          userEnteredValues =
-                              addFunction(_num1, _num2).toString();
+                          _answer =
+                              addFunction(_num1, _num2);
                         } else if (symbol == '-') {
-                          userEnteredValues =
-                              subtractFunction(_num1, _num2).toString();
+                          _answer =
+                              subtractFunction(_num1, _num2);
                         } else if (symbol == 'x') {
-                          userEnteredValues =
-                              multiplyFunction(_num1, _num2).toString();
+                          _answer =
+                              multiplyFunction(_num1, _num2);
                         } else if (symbol == '/') {
-                          userEnteredValues =
-                              divideFunction(_num1, _num2).toString();
+                          _answer =
+                              divideFunction(_num1, _num2);
                         }
+
+                        if(_answer % _answer.toInt() == 0){
+                          userEnteredValues = _answer.toInt().toString();
+                        }
+                        else {
+                          userEnteredValues = _answer.toString();
+                        }
+
                       });
                     },
                     style: ButtonStyle(
